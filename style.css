@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Roboto Mono', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+#countdown-container {
+    display: flex;
+    gap: 40px; /* Space between Days, Hours, etc. */
+}
+
+.time-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-value {
+    font-size: 6rem; /* Big numbers */
+    font-weight: 700;
+}
+
+.time-label {
+    font-size: 1rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #888; /* A dimmer color for the labels */
+}
+
+.hidden {
+    display: none;
+}
