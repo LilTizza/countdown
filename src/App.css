@@ -4,32 +4,44 @@
     --primary-color: #ffffff;
     --secondary-color: #bbbbbb;
     --spotify-green: #1DB954;
-    --background-gradient-start: #191414; /* Spotify-like dark grey */
+    --background-gradient-start: #191414;
     --background-gradient-end: #000000;
+}
+
+/* === NEW/IMPORTANT STYLES FOR FULL-SCREEN CENTERING === */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: 'Roboto Mono', monospace;
     color: var(--primary-color);
-    margin: 0;
     background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
-    background-attachment: fixed; /* Makes gradient stay in place on scroll */
+    background-attachment: fixed;
     text-align: center;
 }
+/* ======================================================= */
+
 
 .app-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     flex-direction: column;
+    height: 100%; /* Changed from 100vh to 100% to work with parent height */
     gap: 50px;
+    padding: 20px;
+    box-sizing: border-box;
     animation: fadeIn 2s ease-in-out;
 }
 
 #countdown-container {
     display: flex;
-    gap: 40px;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    justify-content: center;
+    gap: 30px 40px; /* Vertical and horizontal gap */
     animation: pulse 4s infinite ease-in-out;
 }
 
@@ -39,9 +51,9 @@ body {
 }
 
 .time-value {
-    font-size: 6rem;
+    font-size: clamp(3rem, 12vw, 6rem); /* Responsive font size */
     font-weight: 700;
-    line-height: 1; /* Prevents large text from creating extra space */
+    line-height: 1;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
@@ -58,7 +70,7 @@ body {
 }
 
 .finished-message {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 10vw, 4rem); /* Responsive font size */
     font-weight: 700;
     margin-bottom: 30px;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
@@ -82,7 +94,6 @@ body {
     background-color: #1ed760;
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
