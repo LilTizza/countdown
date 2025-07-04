@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #bbbbbb;
+    --spotify-green: #1DB954;
+    --background-gradient-start: #191414; /* Spotify-like dark grey */
+    --background-gradient-end: #000000;
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    color: var(--primary-color);
+    margin: 0;
+    background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+    background-attachment: fixed; /* Makes gradient stay in place on scroll */
+    text-align: center;
+}
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 50px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+#countdown-container {
+    display: flex;
+    gap: 40px;
+    animation: pulse 4s infinite ease-in-out;
+}
+
+.time-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-value {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1; /* Prevents large text from creating extra space */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.time-label {
+    font-size: 1rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--secondary-color);
+}
+
+.finished-container {
+    animation: fadeIn 1.5s;
+}
+
+.finished-message {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.spotify-button {
+    display: inline-block;
+    background-color: var(--spotify-green);
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.spotify-button:hover {
+    transform: scale(1.05);
+    background-color: #1ed760;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
