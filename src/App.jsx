@@ -12,13 +12,13 @@ const FINISHED_TEXT = "The New Album Is Out Now";
 // === YOUR NEW LYRIC TIMING SYSTEM ===
 // Add objects with the word ('text') and its reveal time in seconds ('time').
 const LYRICS = [
-    { text: "This",     time: 0.28 },
-    { text: "is",       time: 0.53 },
-    { text: "where",    time: 0.77 },
-    { text: "the",      time: 0.98 },
-    { text: "next",     time: 1.13 },
-    { text: "mish",     time: 1.42 },
-    { text: "begins",   time: 1.70 },
+    { text: "This",     time: 0.18 },
+    { text: "is",       time: 0.43 },
+    { text: "where",    time: 0.67 },
+    { text: "the",      time: 0.88 },
+    { text: "next",     time: 1.03 },
+    { text: "mish",     time: 1.32 },
+    { text: "begins",   time: 1.60 },
 ];
 
 // Set the time for the Spotify button to appear
