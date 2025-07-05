@@ -3,12 +3,16 @@ import './App.css';
 
 // ===================================================================
 //
-//          EDIT THESE VALUES TO CUSTOMIZE YOUR COUNTDOWN
+//          EDIT THESE VALUES TO CUSTOMIZE YOUR EXPERIENCE
 //
 const TARGET_DATE = "December 31, 2025 23:59:59";
-const SPOTIFY_URL = "https://open.spotify.com/artist/YOUR_ARTIST_ID_HERE"; // <-- Replace with your band's Spotify link
+const SPOTIFY_URL = "https://open.spotify.com/artist/2XR0tkVAWC9fk2zEAGyX97";
 const MAIN_TITLE = "It's been a long time coming";
 const FINISHED_TEXT = "The New Album Is Out Now";
+
+// Timestamps for the reveal animation (in seconds)
+const REVEAL_CONTENT_AT = 3.21; // The audio cue: "This is where the next mish begins"
+const REVEAL_BUTTON_AT = 4.5;   // A little after the content
 //
 // ===================================================================
 
@@ -28,7 +32,6 @@ const calculateTimeLeft = (target) => {
     return timeLeft;
 };
 
-// A reusable button component to keep our code clean
 const SpotifyButton = ({ url }) => (
     <a href={url} className="spotify-button" target="_blank" rel="noopener noreferrer">
         Listen on Spotify
@@ -36,11 +39,18 @@ const SpotifyButton = ({ url }) => (
 );
 
 function App() {
+    // State for the countdown itself
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(TARGET_DATE));
     const [isFinished, setIsFinished] = useState(Object.keys(calculateTimeLeft(TARGET_DATE)).length === 0);
+    
+    // New state to manage the UI flow
+    const [hasEntered, setHasEntered] = useState(false);
+    const [isContentVisible, setIsContentVisible] = useState(false);
+    const [isButtonVisible, setIsButtonVisible] = useState(false);
+
     const audioRef = useRef(null);
 
-    // Effect for the countdown timer
+    // Countdown timer logic (unchanged)
     useEffect(() => {
         if (isFinished) return;
         const timer = setInterval(() => {
@@ -55,51 +65,70 @@ function App() {
         return () => clearInterval(timer);
     }, [isFinished]);
 
-    // Effect for playing audio on user interaction
+    // This effect runs when the user clicks "Enter"
     useEffect(() => {
-        const playAudioOnFirstInteraction = () => {
-            audioRef.current.play().catch(() => {});
-            window.removeEventListener('click', playAudioOnFirstInteraction);
+        if (!hasEntered) return;
+
+        const audio = audioRef.current;
+        const onTimeUpdate = () => {
+            if (audio.currentTime >= REVEAL_CONTENT_AT && !isContentVisible) {
+                setIsContentVisible(true);
+            }
+            if (audio.currentTime >= REVEAL_BUTTON_AT && !isButtonVisible) {
+                setIsButtonVisible(true);
+                // We can remove the listener now since all events have fired
+                audio.removeEventListener('timeupdate', onTimeUpdate);
+            }
         };
-        window.addEventListener('click', playAudioOnFirstInteraction);
+
+        audio.addEventListener('timeupdate', onTimeUpdate);
+        
         return () => {
-            window.removeEventListener('click', playAudioOnFirstInteraction);
+            audio.removeEventListener('timeupdate', onTimeUpdate);
         };
-    }, []);
+    }, [hasEntered, isContentVisible, isButtonVisible]); // Rerun if state changes
+
+    const handleEnter = () => {
+        setHasEntered(true);
+        audioRef.current.play().catch(error => console.error("Audio Playback Error:", error));
+    };
 
     return (
         <div className="app-container">
-            <audio ref={audioRef} src="/riff.mp3" loop />
-            
-            {isFinished ? (
-                // VIEW WHEN THE COUNTDOWN IS FINISHED
-                <div className="finished-container">
-                    <h1 className="finished-message">{FINISHED_TEXT}</h1>
-                    <SpotifyButton url={SPOTIFY_URL} />
+            {/* The audio element now has NO loop attribute */}
+            <audio ref={audioRef} src="/riff.mp3" preload="auto" />
+
+            {!hasEntered ? (
+                // 1. The initial "Enter" screen
+                <button className="enter-button" onClick={handleEnter}>Enter</button>
+            ) : isFinished ? (
+                // 3. The "Finished" screen (when countdown is over)
+                <div className="content-reveal">
+                    <div className="finished-container">
+                        <h1 className="finished-message">{FINISHED_TEXT}</h1>
+                        <SpotifyButton url={SPOTIFY_URL} />
+                    </div>
                 </div>
             ) : (
-                // VIEW WHILE THE COUNTDOWN IS RUNNING
+                // 2. The main "Countdown" screen after entering
                 <>
-                    <h1 className="main-title">{MAIN_TITLE}</h1>
-                    <div id="countdown-container">
-                        <div className="time-section">
-                            <span className="time-value">{formatTime(timeLeft.days || 0)}</span>
-                            <span className="time-label">Days</span>
+                    {isContentVisible && (
+                        <div className="content-reveal">
+                            <h1 className="main-title">{MAIN_TITLE}</h1>
+                            <div id="countdown-container">
+                                {/* Countdown timer sections */}
+                                <div className="time-section"><span className="time-value">{formatTime(timeLeft.days || 0)}</span><span className="time-label">Days</span></div>
+                                <div className="time-section"><span className="time-value">{formatTime(timeLeft.hours || 0)}</span><span className="time-label">Hours</span></div>
+                                <div className="time-section"><span className="time-value">{formatTime(timeLeft.minutes || 0)}</span><span className="time-label">Minutes</span></div>
+                                <div className="time-section"><span className="time-value">{formatTime(timeLeft.seconds || 0)}</span><span className="time-label">Seconds</span></div>
+                            </div>
                         </div>
-                        <div className="time-section">
-                            <span className="time-value">{formatTime(timeLeft.hours || 0)}</span>
-                            <span className="time-label">Hours</span>
+                    )}
+                    {isButtonVisible && (
+                        <div className="content-reveal">
+                             <SpotifyButton url={SPOTIFY_URL} />
                         </div>
-                        <div className="time-section">
-                            <span className="time-value">{formatTime(timeLeft.minutes || 0)}</span>
-                            <span className="time-label">Minutes</span>
-                        </div>
-                        <div className="time-section">
-                            <span className="time-value">{formatTime(timeLeft.seconds || 0)}</span>
-                            <span className="time-label">Seconds</span>
-                        </div>
-                    </div>
-                    <SpotifyButton url={SPOTIFY_URL} />
+                    )}
                 </>
             )}
         </div>

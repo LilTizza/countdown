@@ -20,6 +20,7 @@ body {
     background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
     background-attachment: fixed;
     text-align: center;
+    overflow: hidden; /* Prevents scrollbars from flashing */
 }
 
 .app-container {
@@ -28,13 +29,48 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    gap: 50px; /* This will create space between the title, countdown, and button */
+    gap: 50px;
     padding: 20px;
     box-sizing: border-box;
-    animation: fadeIn 2s ease-in-out;
 }
 
-/* === NEW STYLE FOR THE MAIN TITLE === */
+/* === NEW STYLES FOR THE ENTRY FLOW === */
+
+.enter-button {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    padding: 15px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+    animation: fadeIn 2s ease;
+}
+
+.enter-button:hover {
+    background-color: var(--primary-color);
+    color: var(--background-gradient-end);
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* A reusable animation wrapper for the content */
+.content-reveal {
+    animation: fadeIn 1.5s ease-out;
+    /* This wrapper helps group animated elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px; /* Use the same gap as the main container */
+}
+
+/* ==================================== */
+
 .main-title {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: 400;
@@ -43,7 +79,6 @@ body {
     text-transform: uppercase;
     margin: 0;
 }
-/* ==================================== */
 
 #countdown-container {
     display: flex;
@@ -74,7 +109,6 @@ body {
 }
 
 .finished-container {
-    animation: fadeIn 1.5s;
     display: flex;
     flex-direction: column;
     align-items: center;
