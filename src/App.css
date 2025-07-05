@@ -50,7 +50,7 @@ body {
     /* Words start invisible */
     opacity: 0;
     /* When opacity changes, transition smoothly over 0.5s */
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.3s ease-out;
 }
 
 .lyric-word.visible {
