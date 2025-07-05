@@ -5,7 +5,7 @@ import './App.css';
 //
 //          EDIT THESE VALUES TO CUSTOMIZE YOUR EXPERIENCE
 //
-const TARGET_DATE = "December 31, 2025 23:59:59";
+const TARGET_DATE = "December 31, 2020 23:59:59";
 const SPOTIFY_URL = "https://open.spotify.com/artist/2XR0tkVAWC9fk2zEAGyX97";
 const MAIN_TITLE = "It's been a long time coming";
 const FINISHED_TEXT = "The New Album Is Out Now";
@@ -18,7 +18,7 @@ const LYRICS = [
     { text: "the",      time: 0.88 },
     { text: "next",     time: 1.03 },
     { text: "mish",     time: 1.32 },
-    { text: "begins",   time: 1.60 },
+    { text: "begins...",   time: 1.60 },
 ];
 
 const REVEAL_MAIN_CONTENT_AT = 3.21;
