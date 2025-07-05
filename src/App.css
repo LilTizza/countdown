@@ -29,31 +29,27 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    /* Create space for multiple content blocks */
     gap: 40px;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* === NEW LYRIC STYLES === */
 .lyrics-container {
-    /* Set a minimum height so layout doesn't jump when words appear */
     min-height: 80px; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px; /* Space between words */
+    gap: 15px;
     font-size: clamp(1.8rem, 6vw, 3rem);
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 4px;
     color: var(--secondary-color);
+    /* CHANGE: Removed text-transform to allow for natural capitalization */
 }
 
 .lyric-word {
-    animation: fadeIn 0.8s ease;
+    /* CHANGE: Using a new, faster animation that doesn't move the text */
+    animation: revealWord 0.3s ease-out;
 }
-/* ======================== */
 
 .enter-button {
     font-family: 'Roboto Mono', monospace;
@@ -83,8 +79,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Use a smaller gap for content that appears together */
     gap: 40px; 
+}
+
+/* === NEW: Placeholder to prevent layout jolt === */
+.button-placeholder {
+    /* This reserves a block of space equal to the button's approximate height. */
+    /* Adjust this value if you change the button's padding or font-size. */
+    min-height: 55px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #countdown-container {
@@ -140,6 +145,8 @@ body {
     border-radius: 50px;
     transition: transform 0.3s ease, background-color 0.3s ease;
     letter-spacing: 1px;
+    /* CHANGE: Applying the fadeIn animation directly to the button */
+    animation: fadeIn 1.5s ease-out;
 }
 
 .spotify-button:hover {
@@ -155,6 +162,16 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* === NEW: Faster animation for lyric words === */
+@keyframes revealWord {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 

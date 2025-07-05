@@ -44,7 +44,7 @@ function App() {
     const [isFinished, setIsFinished] = useState(Object.keys(calculateTimeLeft(TARGET_DATE)).length === 0);
     const [hasEntered, setHasEntered] = useState(false);
     const [isButtonVisible, setIsButtonVisible] = useState(false);
-    const [visibleWordCount, setVisibleWordCount] = useState(0); // Tracks visible words
+    const [visibleWordCount, setVisibleWordCount] = useState(0);
     const audioRef = useRef(null);
 
     // Countdown timer logic
@@ -66,13 +66,10 @@ function App() {
         const audio = audioRef.current;
         
         const onTimeUpdate = () => {
-            // Check for next word reveal
             const nextWord = LYRICS[visibleWordCount];
             if (nextWord && audio.currentTime >= nextWord.time) {
                 setVisibleWordCount(prevCount => prevCount + 1);
             }
-
-            // Check for button reveal
             if (!isButtonVisible && audio.currentTime >= REVEAL_BUTTON_AT) {
                 setIsButtonVisible(true);
             }
@@ -87,7 +84,6 @@ function App() {
         audioRef.current.play().catch(error => console.error("Audio Playback Error:", error));
     };
 
-    // Determine if the main content (countdown) should be visible
     const isMainContentVisible = visibleWordCount > 0;
 
     return (
@@ -121,12 +117,12 @@ function App() {
                             </div>
                         </div>
                     )}
-
-                    {isButtonVisible && (
-                        <div className="content-reveal">
-                             <SpotifyButton url={SPOTIFY_URL} />
-                        </div>
-                    )}
+                    
+                    {/* === THIS IS THE KEY CHANGE === */}
+                    {/* This placeholder div reserves space for the button, preventing layout jolt */}
+                    <div className="button-placeholder">
+                        {isButtonVisible && <SpotifyButton url={SPOTIFY_URL} />}
+                    </div>
                 </>
             )}
         </div>
