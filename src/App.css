@@ -8,7 +8,6 @@
     --background-gradient-end: #000000;
 }
 
-/* === NEW/IMPORTANT STYLES FOR FULL-SCREEN CENTERING === */
 html, body, #root {
     height: 100%;
     margin: 0;
@@ -22,26 +21,35 @@ body {
     background-attachment: fixed;
     text-align: center;
 }
-/* ======================================================= */
-
 
 .app-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100%; /* Changed from 100vh to 100% to work with parent height */
-    gap: 50px;
+    height: 100%;
+    gap: 50px; /* This will create space between the title, countdown, and button */
     padding: 20px;
     box-sizing: border-box;
     animation: fadeIn 2s ease-in-out;
 }
 
+/* === NEW STYLE FOR THE MAIN TITLE === */
+.main-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 400;
+    color: var(--secondary-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0;
+}
+/* ==================================== */
+
 #countdown-container {
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    flex-wrap: wrap; 
     justify-content: center;
-    gap: 30px 40px; /* Vertical and horizontal gap */
+    gap: 30px 40px; 
     animation: pulse 4s infinite ease-in-out;
 }
 
@@ -51,7 +59,7 @@ body {
 }
 
 .time-value {
-    font-size: clamp(3rem, 12vw, 6rem); /* Responsive font size */
+    font-size: clamp(3rem, 12vw, 6rem);
     font-weight: 700;
     line-height: 1;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
@@ -67,12 +75,16 @@ body {
 
 .finished-container {
     animation: fadeIn 1.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
 }
 
 .finished-message {
-    font-size: clamp(2.5rem, 10vw, 4rem); /* Responsive font size */
+    font-size: clamp(2.5rem, 10vw, 4rem); 
     font-weight: 700;
-    margin-bottom: 30px;
+    margin: 0;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
