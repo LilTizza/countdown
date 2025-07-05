@@ -20,7 +20,7 @@ body {
     background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
     background-attachment: fixed;
     text-align: center;
-    overflow: hidden; /* Prevents scrollbars from flashing */
+    overflow: hidden;
 }
 
 .app-container {
@@ -29,12 +29,31 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    gap: 50px;
+    /* Create space for multiple content blocks */
+    gap: 40px;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* === NEW STYLES FOR THE ENTRY FLOW === */
+/* === NEW LYRIC STYLES === */
+.lyrics-container {
+    /* Set a minimum height so layout doesn't jump when words appear */
+    min-height: 80px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; /* Space between words */
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--secondary-color);
+}
+
+.lyric-word {
+    animation: fadeIn 0.8s ease;
+}
+/* ======================== */
 
 .enter-button {
     font-family: 'Roboto Mono', monospace;
@@ -59,25 +78,13 @@ body {
     transform: scale(1.05);
 }
 
-/* A reusable animation wrapper for the content */
 .content-reveal {
     animation: fadeIn 1.5s ease-out;
-    /* This wrapper helps group animated elements */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px; /* Use the same gap as the main container */
-}
-
-/* ==================================== */
-
-.main-title {
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
-    font-weight: 400;
-    color: var(--secondary-color);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin: 0;
+    /* Use a smaller gap for content that appears together */
+    gap: 40px; 
 }
 
 #countdown-container {
@@ -152,13 +159,7 @@ body {
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
